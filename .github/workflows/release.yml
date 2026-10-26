@@ -1,0 +1,20 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build zip from .distignore
+        run: |
+          mkdir -p build/cod-risk-scorer
+          rsync -a --exclude-from=.distignore --exclude=build --exclude=.git ./ build/cod-risk-scorer/
+          (cd build && zip -rq ../cod-risk-scorer-${GITHUB_REF_NAME#v}.zip cod-risk-scorer)
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: cod-risk-scorer-*.zip
+          generate_release_notes: true

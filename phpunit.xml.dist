@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<phpunit bootstrap="tests/phpunit/bootstrap.php" colors="true">
+	<testsuites>
+		<testsuite name="integration">
+			<file>tests/phpunit/IntegrationTest.php</file>
+			<file>tests/phpunit/PureLogicTest.php</file>
+		</testsuite>
+	</testsuites>
+	<coverage processUncoveredFiles="true">
+		<include><directory suffix=".php">includes</directory></include>
+	</coverage>
+</phpunit>

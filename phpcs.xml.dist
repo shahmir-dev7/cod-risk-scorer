@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ruleset name="Redirect 404 Sentinel">
+	<file>.</file>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
+	<arg name="extensions" value="php"/>
+	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress-Docs"/>
+	<config name="testVersion" value="7.4-"/>
+	<rule ref="PHPCompatibilityWP"/>
+	<config name="minimum_wp_version" value="6.5"/>
+	<rule ref="WordPress.WP.I18n">
+		<properties><property name="text_domain" type="array"><element value="cod-risk-scorer"/></property></properties>
+	</rule>
+	<rule ref="WordPress.Files.FileName">
+		<properties><property name="strict_class_file_names" value="false"/></properties>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+	</rule>
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties><property name="prefixes" type="array"><element value="codrisk"/><element value="CodRisk"/></property></properties>
+	</rule>
+</ruleset>

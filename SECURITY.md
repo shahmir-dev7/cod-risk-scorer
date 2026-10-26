@@ -1,0 +1,2 @@
+# Security policy
+Report vulnerabilities privately through GitHub's "Report a vulnerability" (Security tab) on this repository. Please do not open public issues for security problems. Expect an acknowledgement within a few days.

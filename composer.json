@@ -1,0 +1,29 @@
+{
+	"name": "shahmir-dev7/cod-risk-scorer",
+	"description": "Scores cash-on-delivery WooCommerce orders for fraud risk and holds suspicious ones.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"require": { "php": ">=7.4" },
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^3.0",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+		"phpstan/phpstan": "^2.0",
+		"szepeviktor/phpstan-wordpress": "^2.0",
+		"phpstan/extension-installer": "^1.4",
+		"phpunit/phpunit": "^9.6",
+		"yoast/phpunit-polyfills": "^2.0",
+		"php-stubs/woocommerce-stubs": "^10.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
+		}
+	},
+	"scripts": {
+		"lint": "phpcs --standard=phpcs.xml.dist",
+		"stan": "phpstan analyse -c phpstan.neon.dist --memory-limit=1G",
+		"test:unit": "phpunit -c phpunit.unit.xml"
+	}
+}

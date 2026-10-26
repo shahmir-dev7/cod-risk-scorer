@@ -1,0 +1,40 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+      - run: composer install --no-progress
+      - run: composer lint
+      - run: composer stan
+      - run: composer test:unit
+  integration:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Start wp-env
+        run: |
+          cat > .wp-env.json <<'JSON'
+          {"core":null,"phpVersion":"${{ matrix.php }}","plugins":["https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"],"mappings":{"wp-content/plugins/${{ github.event.repository.name }}":"."}}
+          JSON
+          npx @wordpress/env start
+      - name: PHPUnit 9.6 and polyfills in the tests container
+        run: npx @wordpress/env run tests-cli composer global require --no-interaction -W "phpunit/phpunit:^9.6" "yoast/phpunit-polyfills:^2.0"
+      - name: PHPUnit (WordPress suite)
+        run: |
+          npx @wordpress/env run tests-cli --env-cwd=wp-content/plugins/${{ github.event.repository.name }} sh -c 'H="$(composer global config home)"; WP_TESTS_PHPUNIT_POLYFILLS_PATH="$H/vendor/yoast/phpunit-polyfills" "$H/vendor/bin/phpunit" -c phpunit.xml.dist'

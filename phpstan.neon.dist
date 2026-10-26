@@ -1,0 +1,8 @@
+parameters:
+    level: 6
+    paths:
+        - includes
+        - cod-risk-scorer.php
+        - uninstall.php
+    scanFiles:
+        - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
