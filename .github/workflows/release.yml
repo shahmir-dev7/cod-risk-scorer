@@ -12,7 +12,7 @@ jobs:
       - name: Build zip from .distignore
         run: |
           mkdir -p build/cod-risk-scorer
-          rsync -a --exclude-from=.distignore --exclude=build --exclude=.git ./ build/cod-risk-scorer/
+          rsync -a --exclude-from=.distignore --exclude=.distignore --exclude=build --exclude=.git ./ build/cod-risk-scorer/
           (cd build && zip -rq ../cod-risk-scorer-${GITHUB_REF_NAME#v}.zip cod-risk-scorer)
       - uses: softprops/action-gh-release@v2
         with:
